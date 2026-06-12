@@ -241,6 +241,22 @@
             margin-top: 60px;
         }
 
+        /* Wrapper para alinhar Logótipo e Título lado a lado */
+        .title-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .inline-logo {
+            height: 65px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
         /* =========================================
            RESPONSIVIDADE (A magia que corrige o telemóvel) 
            ========================================= */
@@ -279,13 +295,16 @@
 <body>
 
     <header class="hero">
-        <img src="logo.png" alt="Logótipo Oficial CORVUS X8" style="max-height: 160px; width: auto; margin: 0 auto 15px auto; display: block; filter: brightness(0) invert(1);">
+        <div class="title-wrapper">
+            <img src="logo.png" alt="Logótipo Oficial CORVUS X8" class="inline-logo">
+            <h1 style="margin: 0;">CORVUS <span>X8</span></h1>
+        </div>
         
-        <h1>CORVUS <span>X8</span></h1>
         <p class="subtitle">Veículo Aéreo Não Tripulado para Entrega Rápida de Kits de Emergência em Contexto Urbano.</p>
         
         <img src="CAD_X8.jpeg" alt="Renderização CAD do VANT CORVUS X8" class="hero-image">
     </header>
+    
     <div class="container">
         
         <h2>O Desafio Urbano</h2>
