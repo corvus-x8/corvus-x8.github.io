@@ -38,7 +38,8 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: 100vh; /* Fallback para browsers antigos */
+            height: 100dvh; /* Unidade dinâmica que ignora as barras de navegação mobile */
             background-color: #000;
             z-index: 9999;
             display: flex;
@@ -48,15 +49,20 @@
         }
 
         #intro-overlay video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Faz o vídeo preencher o ecrã todo sem distorcer no PC */
+            object-fit: cover; /* Preenche o ecrã. Como há vídeos diferentes, não distorce */
+            z-index: 1;
         }
 
         #skip-intro {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             right: 30px;
+            z-index: 2; /* Garante que fica sempre por cima do vídeo */
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
@@ -104,7 +110,7 @@
 
         /* Hero Section (Topo) */
         .hero {
-            position: relative; /* Adicionado para o botão de idioma ficar bem posicionado */
+            position: relative;
             background: radial-gradient(circle at top, #1e293b 0%, var(--bg-color) 70%);
             padding: 80px 20px 40px;
             text-align: center;
@@ -337,17 +343,12 @@
             .specs-grid { grid-template-columns: 1fr; }
             .lang-switch { top: 15px; right: 15px; }
 
-            /* Ajustes do vídeo de intro para mobile */
-            #intro-overlay video {
-                object-fit: contain; 
-            }
-            
+            /* Ajustes do botão no telemóvel */
             #skip-intro {
-                bottom: 20px;
+                bottom: 30px;
                 right: 20px;
                 font-size: 0.85em;
                 padding: 8px 15px;
-                z-index: 10001; /* Garante que fica por cima do vídeo */
             }
         }
     </style>
@@ -356,6 +357,7 @@
 
     <div id="intro-overlay">
         <video id="intro-video" autoplay muted playsinline>
+            <source media="(max-width: 768px)" src="Intro_vid_mobile.mp4" type="video/mp4">
             <source src="Intro_vid.mp4" type="video/mp4">
         </video>
         <button id="skip-intro">Saltar / Skip</button>
@@ -450,7 +452,7 @@
 
     <footer>
         <p><strong>Projeto Integrador em Engenharia Aeroespacial</strong> | Orientador: Frederico Afonso</p>
-        <p>Instituto Superior Técnico - Universidade de Lisboa |  2025/2026</p>
+        <p>Instituto Superior Técnico - Universidade de Lisboa | 2025/2026</p>
     </footer>
 
     <script>
@@ -460,38 +462,29 @@
             const skipButton = document.getElementById('skip-intro');
 
             // ---- CONFIGURAÇÃO DE TEMPO ----
-            // Define aqui em que segundo queres que a transição comece
             const tempoFimIntro = 4.5; 
-            let introFechada = false; // Controlo para evitar que a função corra várias vezes
+            let introFechada = false;
 
-            // Função para esconder a intro e devolver o scroll
             function closeIntro() {
-                if (introFechada) return; // Se já fechou, não faz nada
+                if (introFechada) return;
                 introFechada = true;
 
                 introOverlay.classList.add('fade-out');
                 document.body.classList.remove('no-scroll');
                 
-                // Pausa o vídeo para poupar recursos em background após o fade out (1s)
                 setTimeout(() => {
                     introVideo.pause();
                 }, 1000); 
             }
 
-            // Oculta a intro quando o vídeo chega ao tempo definido
             introVideo.addEventListener('timeupdate', () => {
                 if (introVideo.currentTime >= tempoFimIntro) {
                     closeIntro();
                 }
             });
 
-            // Fallback: Oculta a intro quando o vídeo chega ao fim naturalmente
             introVideo.addEventListener('ended', closeIntro);
-
-            // Oculta a intro se o utilizador clicar em "Skip"
             skipButton.addEventListener('click', closeIntro);
-            
-            // Backup: Se houver algum erro a carregar o vídeo, a intro desaparece
             introVideo.addEventListener('error', closeIntro);
         });
     </script>
