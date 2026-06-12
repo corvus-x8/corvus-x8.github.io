@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CORVUS X8 | Transporte de Emergência Médica</title>
     <style>
-        /* Regra de Ouro para Responsividade (Impede que as caixas transbordem o ecrã) */
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        /* Regra de Ouro para Responsividade */
+        *, *::before, *::after { box-sizing: border-box; }
 
-        /* Estilos Base e Variáveis */
         :root {
             --bg-color: #0b0f19;
             --surface-color: #151e2e;
@@ -27,11 +24,87 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Impede scroll horizontal */
+            overflow-x: hidden;
+        }
+
+        /* Classe para bloquear o scroll durante o vídeo de intro */
+        body.no-scroll { overflow: hidden; }
+
+        /* =========================================
+           UI DO VÍDEO DE INTRODUÇÃO
+           ========================================= */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-in-out, visibility 1s;
+        }
+
+        #intro-overlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Faz o vídeo preencher o ecrã todo sem distorcer */
+        }
+
+        #skip-intro {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            backdrop-filter: blur(5px);
+            transition: background 0.3s;
+        }
+
+        #skip-intro:hover { background: rgba(255, 255, 255, 0.3); }
+
+        /* Classe que o JS vai usar para fazer fade out à intro */
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* =========================================
+           BOTÃO DE IDIOMA (Canto Superior Direito)
+           ========================================= */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .lang-btn {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            border: 1px solid var(--text-muted);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .lang-btn:hover, .lang-btn.active {
+            color: var(--accent-color);
+            border-color: var(--accent-color);
         }
 
         /* Hero Section (Topo) */
         .hero {
+            position: relative; /* Adicionado para o botão de idioma ficar bem posicionado */
             background: radial-gradient(circle at top, #1e293b 0%, var(--bg-color) 70%);
             padding: 80px 20px 40px;
             text-align: center;
@@ -46,9 +119,7 @@
             text-transform: uppercase;
         }
 
-        .hero h1 span {
-            color: var(--accent-color);
-        }
+        .hero h1 span { color: var(--accent-color); }
 
         .hero p.subtitle {
             font-size: 1.2em;
@@ -103,7 +174,7 @@
             font-weight: 600;
         }
 
-        /* Secção Dividida (Texto e Imagem Pessoa) */
+        /* Secção Dividida */
         .split-section {
             display: flex;
             flex-wrap: wrap;
@@ -116,16 +187,9 @@
             border: 1px solid #1e293b;
         }
 
-        .split-text {
-            flex: 1;
-            min-width: 300px; /* Isto causava o problema no telemóvel, foi resolvido no @media abaixo */
-        }
-
-        .split-image {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
+        .split-text, .split-image { flex: 1; }
+        
+        .split-image { text-align: center; }
 
         .split-image img {
             max-width: 100%;
@@ -186,7 +250,7 @@
             letter-spacing: 1px;
         }
 
-        /* Vídeo */
+        /* Vídeo Simulador */
         .video-wrapper {
             margin-top: 30px;
             border-radius: 12px;
@@ -241,7 +305,6 @@
             margin-top: 60px;
         }
 
-        /* Wrapper para alinhar Logótipo e Título lado a lado */
         .title-wrapper {
             display: flex;
             align-items: center;
@@ -257,44 +320,40 @@
             filter: brightness(0) invert(1);
         }
 
-        /* =========================================
-           RESPONSIVIDADE (A magia que corrige o telemóvel) 
-           ========================================= */
+        /* Responsividade */
         @media (max-width: 768px) {
-            .hero {
-                padding: 50px 15px 30px;
-            }
-            .hero h1 {
-                font-size: 2.8em;
-            }
-            .container {
-                padding: 40px 15px;
-            }
-            h2 {
-                font-size: 1.8em;
-            }
+            .hero { padding: 60px 15px 30px; }
+            .hero h1 { font-size: 2.8em; }
+            .container { padding: 40px 15px; }
+            h2 { font-size: 1.8em; }
             
-            /* Correção definitiva da secção partida */
             .split-section {
-                flex-direction: column; /* Força a imagem a ficar em baixo do texto */
-                padding: 30px 20px; /* Reduz a margem que estava a esmagar o texto */
+                flex-direction: column;
+                padding: 30px 20px;
                 gap: 30px; 
                 margin: 40px 0;
             }
-            .split-text, .split-image {
-                min-width: 0; /* Remove a regra dos 300px que estava a estragar o ecrã */
-                width: 100%; /* Garante que ocupa a largura perfeita e não mais do que isso */
-            }
-            
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
+            .split-text, .split-image { width: 100%; }
+            .specs-grid { grid-template-columns: 1fr; }
+            .lang-switch { top: 15px; right: 15px; }
         }
     </style>
 </head>
-<body>
+<body class="no-scroll">
+
+    <div id="intro-overlay">
+        <video id="intro-video" autoplay muted playsinline>
+            <source src="intro-video.mp4" type="video/mp4">
+        </video>
+        <button id="skip-intro">Saltar / Skip</button>
+    </div>
 
     <header class="hero">
+        <div class="lang-switch">
+            <span class="lang-btn active">PT</span>
+            <a href="en.html" class="lang-btn">EN</a>
+        </div>
+
         <div class="title-wrapper">
             <img src="logo.png" alt="Logótipo Oficial CORVUS X8" class="inline-logo">
             <h1 style="margin: 0;">CORVUS <span>X8</span></h1>
@@ -306,7 +365,6 @@
     </header>
     
     <div class="container">
-        
         <h2>O Desafio Urbano</h2>
         <p>A paragem cardiorrespiratória constitui uma das principais causas de mortalidade evitável em contexto urbano. Em cidades densamente povoadas como Lisboa, o congestionamento rodoviário condiciona o tempo de resposta dos meios terrestres de emergência médica. Sabemos que cada minuto decorrido sem acesso a um Desfibrilhador Externo Automático (DEA) reduz a probabilidade de sobrevivência em aproximadamente <span class="highlight">10%</span>.</p>
 
@@ -382,5 +440,32 @@
         <p>Instituto Superior Técnico - Universidade de Lisboa |  2025/2026</p>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const introOverlay = document.getElementById('intro-overlay');
+            const introVideo = document.getElementById('intro-video');
+            const skipButton = document.getElementById('skip-intro');
+
+            // Função para esconder a intro e devolver o scroll
+            function closeIntro() {
+                introOverlay.classList.add('fade-out');
+                document.body.classList.remove('no-scroll');
+                
+                // Pausa o vídeo para poupar recursos em background
+                setTimeout(() => {
+                    introVideo.pause();
+                }, 1000); // 1000ms = 1 segundo de duração do fade out do CSS
+            }
+
+            // Oculta a intro quando o vídeo chega ao fim automaticamente
+            introVideo.addEventListener('ended', closeIntro);
+
+            // Oculta a intro se o utilizador clicar em "Skip"
+            skipButton.addEventListener('click', closeIntro);
+            
+            // Backup: Se houver algum erro a carregar o vídeo, a intro desaparece para não bloquear o site
+            introVideo.addEventListener('error', closeIntro);
+        });
+    </script>
 </body>
 </html>
