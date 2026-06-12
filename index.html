@@ -50,7 +50,7 @@
         #intro-overlay video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Faz o vídeo preencher o ecrã todo sem distorcer */
+            object-fit: cover; /* Faz o vídeo preencher o ecrã todo sem distorcer no PC */
         }
 
         #skip-intro {
@@ -336,6 +336,19 @@
             .split-text, .split-image { width: 100%; }
             .specs-grid { grid-template-columns: 1fr; }
             .lang-switch { top: 15px; right: 15px; }
+
+            /* Ajustes do vídeo de intro para mobile */
+            #intro-overlay video {
+                object-fit: contain; 
+            }
+            
+            #skip-intro {
+                bottom: 20px;
+                right: 20px;
+                font-size: 0.85em;
+                padding: 8px 15px;
+                z-index: 10001; /* Garante que fica por cima do vídeo */
+            }
         }
     </style>
 </head>
@@ -446,24 +459,39 @@
             const introVideo = document.getElementById('intro-video');
             const skipButton = document.getElementById('skip-intro');
 
+            // ---- CONFIGURAÇÃO DE TEMPO ----
+            // Define aqui em que segundo queres que a transição comece
+            const tempoFimIntro = 4.5; 
+            let introFechada = false; // Controlo para evitar que a função corra várias vezes
+
             // Função para esconder a intro e devolver o scroll
             function closeIntro() {
+                if (introFechada) return; // Se já fechou, não faz nada
+                introFechada = true;
+
                 introOverlay.classList.add('fade-out');
                 document.body.classList.remove('no-scroll');
                 
-                // Pausa o vídeo para poupar recursos em background
+                // Pausa o vídeo para poupar recursos em background após o fade out (1s)
                 setTimeout(() => {
                     introVideo.pause();
-                }, 1000); // 1000ms = 1 segundo de duração do fade out do CSS
+                }, 1000); 
             }
 
-            // Oculta a intro quando o vídeo chega ao fim automaticamente
+            // Oculta a intro quando o vídeo chega ao tempo definido
+            introVideo.addEventListener('timeupdate', () => {
+                if (introVideo.currentTime >= tempoFimIntro) {
+                    closeIntro();
+                }
+            });
+
+            // Fallback: Oculta a intro quando o vídeo chega ao fim naturalmente
             introVideo.addEventListener('ended', closeIntro);
 
             // Oculta a intro se o utilizador clicar em "Skip"
             skipButton.addEventListener('click', closeIntro);
             
-            // Backup: Se houver algum erro a carregar o vídeo, a intro desaparece para não bloquear o site
+            // Backup: Se houver algum erro a carregar o vídeo, a intro desaparece
             introVideo.addEventListener('error', closeIntro);
         });
     </script>
