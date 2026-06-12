@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORVUS X8 - Projeto Integrador</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 4px solid #00a8ff;
+        }
+        h1 {
+            color: #00a8ff;
+            margin: 0 0 10px 0;
+            font-size: 3em;
+        }
+        header p {
+            font-size: 1.2em;
+            color: #aaa;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h2 {
+            color: #ffffff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        .highlight {
+            color: #00a8ff;
+            font-weight: bold;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .team-member {
+            background: #1f1f1f;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #00a8ff;
+        }
+        .ist-number {
+            display: block;
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+        ul {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background-color: #0a0a0a;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>CORVUS X8</h1>
+        <p>VANT para Transporte de Kits de Emergência em Ambiente Urbano</p>
+    </header>
+
+    <div class="container">
+        <h2>O Problema</h2>
+        <p>A paragem cardiorrespiratória é uma das principais causas de mortalidade evitável em contexto urbano. Em cidades densamente povoadas como Lisboa, o congestionamento rodoviário condiciona frequentemente o tempo de resposta das ambulâncias, reduzindo drasticamente as probabilidades de sobrevivência das vítimas. Cada minuto sem acesso a equipamento de suporte de vida reduz a probabilidade de sobrevivência em aproximadamente <span class="highlight">10%</span>.</p>
+
+        <h2>A Nossa Solução</h2>
+        <p>O projeto <strong>CORVUS X8</strong> propõe o desenvolvimento de um Veículo Aéreo Não Tripulado (VANT) criado especificamente para a entrega rápida de um kit médico de emergência, focado no transporte de um Desfibrilhador Externo Automático (DEA).</p>
+        <ul>
+            <li><strong>Entrega por Guincho:</strong> Utilizamos um sistema de guincho RDS2 que permite depositar o kit no solo de forma controlada.</li>
+            <li><strong>Segurança no Solo:</strong> A aeronave não aterra. Mantém-se em voo estacionário (hover) a uma altitude segura, afastando as hélices de pessoas e obstáculos.</li>
+            <li><strong>Rapidez Crítica:</strong> Alcance de cerca de 3,7 km, chegando à vítima em cerca de 4 minutos e 45 segundos, cumprindo a janela crítica.</li>
+        </ul>
+
+        <h2>Especificações Técnicas</h2>
+        <ul>
+            <li><strong>Configuração:</strong> Octocóptero coaxial X8 (elevada tolerância a falhas).</li>
+            <li><strong>Massa Máxima à Descolagem:</strong> ~22,9 kg.</li>
+            <li><strong>Capacidade de Carga:</strong> Payload e guincho de 5,0 kg, transportando kit médico modular de 2,1 kg.</li>
+            <li><strong>Sistema Propulsivo:</strong> Motores T-Motor U8 Lite KV100, Hélices G28x9.2 CF e ESCs Alpha 60A 12S.</li>
+            <li><strong>Autonomia:</strong> Missão calculada em ~18 minutos e 7 segundos.</li>
+        </ul>
+
+        <h2>A Equipa (Grupo 3)</h2>
+        <div class="team-grid">
+            <div class="team-member">Arnav Rana <span class="ist-number">ist1106473</span></div>
+            <div class="team-member">Tiago Coias <span class="ist-number">ist1106662</span></div>
+            <div class="team-member">João Pinto <span class="ist-number">ist1106752</span></div>
+            <div class="team-member">José Eira <span class="ist-number">ist1106718</span></div>
+            <div class="team-member">Rodrigo Gonçalves <span class="ist-number">ist1107337</span></div>
+            <div class="team-member">Péricles Santos <span class="ist-number">ist1107363</span></div>
+            <div class="team-member">Duarte Coelho <span class="ist-number">ist1119002</span></div>
+            <div class="team-member">Tomás Alves <span class="ist-number">ist1119004</span></div>
+            <div class="team-member">Beatriz Martins <span class="ist-number">ist1119005</span></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Projeto Integrador em Engenharia Aeroespacial | Orientador: Frederico Afonso</p>
+        <p>Instituto Superior Técnico - Universidade de Lisboa</p>
+    </footer>
+
+</body>
+</html>
