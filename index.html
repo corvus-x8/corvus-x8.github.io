@@ -233,25 +233,51 @@
             color: var(--text-muted);
             margin-top: 60px;
         }
+
+        /* =========================================
+           RESPONSIVIDADE (Correções para Telemóvel) 
+           ========================================= */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 50px 15px 30px;
+            }
+            .hero h1 {
+                font-size: 2.8em; /* Reduz o título no telemóvel */
+            }
+            .container {
+                padding: 40px 15px; /* Reduz as margens laterais */
+            }
+            h2 {
+                font-size: 1.8em;
+            }
+            .split-section {
+                padding: 25px 15px; /* Muito importante: menos margem interior */
+                gap: 25px; /* Menos espaço entre texto e foto */
+                margin: 40px 0;
+            }
+            .split-text, .split-image {
+                min-width: 100%; /* Força os blocos a ocuparem o ecrã e a empilharem perfeitamente */
+                flex: none;
+            }
+            .specs-grid {
+                grid-template-columns: 1fr; /* Cartões numa só coluna */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- HERO SECTION -->
     <header class="hero">
         <h1>CORVUS <span>X8</span></h1>
         <p class="subtitle">Veículo Aéreo Não Tripulado para Entrega Rápida de Kits de Emergência em Contexto Urbano.</p>
-        <!-- IMAGEM DE DESTAQUE (Drone Isolado) -->
         <img src="CAD_X8.jpeg" alt="Renderização CAD do VANT CORVUS X8" class="hero-image">
     </header>
 
     <div class="container">
         
-        <!-- O PROBLEMA -->
         <h2>O Desafio Urbano</h2>
         <p>A paragem cardiorrespiratória constitui uma das principais causas de mortalidade evitável em contexto urbano. Em cidades densamente povoadas como Lisboa, o congestionamento rodoviário condiciona o tempo de resposta dos meios terrestres de emergência médica. Sabemos que cada minuto decorrido sem acesso a um Desfibrilhador Externo Automático (DEA) reduz a probabilidade de sobrevivência em aproximadamente <span class="highlight">10%</span>.</p>
 
-        <!-- SECÇÃO DIVIDIDA: SOLUÇÃO + IMGEM DE ESCALA -->
         <div class="split-section">
             <div class="split-text">
                 <h2 style="margin-top: 0;">A Nossa Solução</h2>
@@ -263,12 +289,10 @@
                 </ul>
             </div>
             <div class="split-image">
-                <!-- IMAGEM DE ESCALA (Drone + Pessoa) -->
                 <img src="CAD_X8_pessoa.jpeg" alt="Escala do VANT CORVUS X8 com operador">
             </div>
         </div>
 
-        <!-- ESPECIFICAÇÕES TÉCNICAS -->
         <h2>Especificações Técnicas</h2>
         <div class="specs-grid">
             <div class="spec-card">
@@ -297,20 +321,16 @@
             </div>
         </div>
 
-        <!-- VÍDEO DE SIMULAÇÃO -->
         <h2>Simulação e Navegação</h2>
         <p>Ambiente de simulação <i>Software In The Loop</i> (SITL) e Gazebo Harmonic para validação da dinâmica do VANT (OctaQuad X) e deteção de obstáculos em cenário urbano hospitalar.</p>
         
         <div class="video-wrapper">
-            <!-- VÍDEO COM POSTER DA IMAGEM DO GAZEBO -->
-            <!-- Adiciona o teu vídeo substituindo 'simulacao.mp4'. O poster garante que a imagem aparece antes do vídeo tocar -->
             <video controls poster="Hospital_Simulation.jpeg">
                 <source src="Simulation.mp4" type="video/mp4">
                 O teu browser não suporta vídeos em HTML5.
             </video>
         </div>
 
-        <!-- EQUIPA -->
         <h2>Equipa (Grupo 3)</h2>
         <div class="team-grid">
             <div class="team-member">Arnav Rana <span class="ist-number">ist1106473</span></div>
@@ -325,7 +345,6 @@
         </div>
     </div>
 
-    <!-- RODAPÉ -->
     <footer>
         <p><strong>Projeto Integrador em Engenharia Aeroespacial</strong> | Orientador: Frederico Afonso</p>
         <p>Instituto Superior Técnico - Universidade de Lisboa |  2025/2026</p>
