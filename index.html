@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CORVUS X8 | Transporte de Emergência Médica</title>
     <style>
+        /* Regra de Ouro para Responsividade (Impede que as caixas transbordem o ecrã) */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
         /* Estilos Base e Variáveis */
         :root {
             --bg-color: #0b0f19;
@@ -22,7 +27,7 @@
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Impede scroll horizontal */
         }
 
         /* Hero Section (Topo) */
@@ -113,7 +118,7 @@
 
         .split-text {
             flex: 1;
-            min-width: 300px;
+            min-width: 300px; /* Isto causava o problema no telemóvel, foi resolvido no @media abaixo */
         }
 
         .split-image {
@@ -124,6 +129,8 @@
 
         .split-image img {
             max-width: 100%;
+            height: auto;
+            display: block;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
@@ -235,32 +242,36 @@
         }
 
         /* =========================================
-           RESPONSIVIDADE (Correções para Telemóvel) 
+           RESPONSIVIDADE (A magia que corrige o telemóvel) 
            ========================================= */
         @media (max-width: 768px) {
             .hero {
                 padding: 50px 15px 30px;
             }
             .hero h1 {
-                font-size: 2.8em; /* Reduz o título no telemóvel */
+                font-size: 2.8em;
             }
             .container {
-                padding: 40px 15px; /* Reduz as margens laterais */
+                padding: 40px 15px;
             }
             h2 {
                 font-size: 1.8em;
             }
+            
+            /* Correção definitiva da secção partida */
             .split-section {
-                padding: 25px 15px; /* Muito importante: menos margem interior */
-                gap: 25px; /* Menos espaço entre texto e foto */
+                flex-direction: column; /* Força a imagem a ficar em baixo do texto */
+                padding: 30px 20px; /* Reduz a margem que estava a esmagar o texto */
+                gap: 30px; 
                 margin: 40px 0;
             }
             .split-text, .split-image {
-                min-width: 100%; /* Força os blocos a ocuparem o ecrã e a empilharem perfeitamente */
-                flex: none;
+                min-width: 0; /* Remove a regra dos 300px que estava a estragar o ecrã */
+                width: 100%; /* Garante que ocupa a largura perfeita e não mais do que isso */
             }
+            
             .specs-grid {
-                grid-template-columns: 1fr; /* Cartões numa só coluna */
+                grid-template-columns: 1fr;
             }
         }
     </style>
